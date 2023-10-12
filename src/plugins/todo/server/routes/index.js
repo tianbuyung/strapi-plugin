@@ -1,10 +1,11 @@
 module.exports = [
   {
-    method: 'GET',
-    path: '/',
-    handler: 'myController.index',
+    method: "GET",
+    path: "/count",
+    handler: "task.count",
     config: {
       policies: [],
+      auth: false,
     },
   },
 ];
