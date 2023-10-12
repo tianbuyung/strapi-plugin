@@ -19,7 +19,7 @@ const TweetButton = () => {
 
   const handleTweet = () => {
     const tweetUrl = `https://twitter.com/intent/tweet?text=${`${encodeURIComponent(
-      modifiedData.seo.metaTitle
+      modifiedData.name
     )} (powered by Strapi)`}&url=${
       process.env.STRAPI_ADMIN_CLIENT_URL
     }/${base}/${modifiedData.slug}`;
