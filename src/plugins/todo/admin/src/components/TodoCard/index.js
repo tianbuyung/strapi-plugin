@@ -11,8 +11,6 @@ import {
   Divider,
   Checkbox,
   Stack,
-  Flex,
-  Icon,
   TextButton,
 } from "@strapi/design-system";
 

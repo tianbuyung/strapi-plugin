@@ -534,6 +534,14 @@ export interface PluginTodoTask extends Schema.CollectionType {
     draftAndPublish: false;
     comment: '';
   };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
   attributes: {
     name: Attribute.String &
       Attribute.Required &

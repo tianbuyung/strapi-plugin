@@ -43,14 +43,15 @@ module.exports = createCoreService("plugin::todo.task", {
     return pluginStore.get({ key: "settings" });
   },
 
-  async create(data) {
-    return await strapi.query("plugin::todo.task").create(data);
+  async createTask(data) {
+    return strapi.entityService.create("plugin::todo.task", { data });
   },
 
-  async update(id, data) {
-    return await strapi.query("plugin::todo.task").update({
-      where: { id },
-      data,
-    });
+  async updateTask(id, data) {
+    return strapi.entityService.update("plugin::todo.task", id, { data });
+  },
+
+  async deleteTask(id) {
+    return strapi.entityService.delete("plugin::todo.task", id);
   },
 });

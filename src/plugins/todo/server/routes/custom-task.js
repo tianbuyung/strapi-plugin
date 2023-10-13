@@ -34,9 +34,9 @@ module.exports = {
     },
 
     {
-      method: "PUT",
-      path: "/update/:id",
-      handler: "task.update",
+      method: "POST",
+      path: "/create",
+      handler: "task.createTask",
       config: {
         policies: [],
         auth: false,
@@ -44,9 +44,19 @@ module.exports = {
     },
 
     {
-      method: "POST",
-      path: "/create",
-      handler: "task.create",
+      method: "PUT",
+      path: "/update/:id",
+      handler: "task.updateTask",
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+
+    {
+      method: "DELETE",
+      path: "/tasks/:id",
+      handler: "task.deleteTask",
       config: {
         policies: [],
         auth: false,
