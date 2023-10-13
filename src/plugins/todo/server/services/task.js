@@ -1,7 +1,9 @@
-"use strict";
+'use strict';
 
-module.exports = ({ strapi }) => ({
-  async count() {
-    return await strapi.query("plugin::todo.task").count();
-  },
-});
+/**
+ *  service
+ */
+
+const { createCoreService } = require('@strapi/strapi').factories;
+
+module.exports = createCoreService('plugin::todo.task');

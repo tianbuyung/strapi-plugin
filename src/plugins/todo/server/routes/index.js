@@ -1,11 +1,7 @@
-module.exports = [
-  {
-    method: "GET",
-    path: "/count",
-    handler: "task.count",
-    config: {
-      policies: [],
-      auth: false,
-    },
-  },
-];
+"use strict";
+
+const task = require("./task");
+
+module.exports = {
+  task,
+};
