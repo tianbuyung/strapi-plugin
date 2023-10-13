@@ -5,9 +5,6 @@
  */
 
 import React, { memo, useState, useEffect } from "react";
-
-import taskRequests from "../../api/task";
-
 import {
   Box,
   Flex,
@@ -15,16 +12,19 @@ import {
   EmptyStateLayout,
   BaseHeaderLayout,
   ContentLayout,
-  Button,
 } from "@strapi/design-system";
 import { LoadingIndicatorPage } from "@strapi/helper-plugin";
+import { useIntl } from "react-intl";
 
+import taskRequests from "../../api/task";
 import { Illo } from "../../components/Illo";
-import { Plus } from "@strapi/icons";
+import getTrad from "../../utils/getTrad";
 
 const HomePage = () => {
   const [taskCount, setTaskCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     taskRequests.getTaskCount().then((res) => {
@@ -33,35 +33,25 @@ const HomePage = () => {
     setIsLoading((prev) => !prev);
   }, [setTaskCount]);
 
-  const createContentHandler = () => {
-    console.log("createContentHandler");
-  };
-
-  if (isLoading) return <LoadingIndicatorPage />;
-
   return (
     <>
       <BaseHeaderLayout
-        title="Todo Plugin"
+        title={formatMessage({
+          id: getTrad("Homepage.BaseHeaderLayout.title"),
+          defaultMessage: "Todo Plugin",
+        })}
         subtitle="Discover the number of tasks you have in your project"
         as="h2"
       />
+
       <ContentLayout>
         {taskCount === 0 && (
           <EmptyStateLayout
             icon={<Illo />}
             content="You don't have any tasks yet..."
-            action={
-              <Button
-                variant="secondary"
-                startIcon={<Plus />}
-                onClick={createContentHandler}
-              >
-                Create your first content-type
-              </Button>
-            }
           />
         )}
+
         {taskCount > 0 && (
           <Box background="neutral0" hasRadius={true} shadow="filterShadow">
             <Flex justifyContent="center" padding={8}>
