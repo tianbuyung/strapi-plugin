@@ -45,6 +45,7 @@ export interface AdminPermission extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::permission', 'morphMany'>;
   };
 }
 
@@ -102,6 +103,7 @@ export interface AdminUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<'admin::user', 'oneToOne', 'admin::user'> &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::user', 'morphMany'>;
   };
 }
 
@@ -148,6 +150,7 @@ export interface AdminRole extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<'admin::role', 'oneToOne', 'admin::user'> &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::role', 'morphMany'>;
   };
 }
 
@@ -210,6 +213,7 @@ export interface AdminApiToken extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::api-token', 'morphMany'>;
   };
 }
 
@@ -255,6 +259,7 @@ export interface AdminApiTokenPermission extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::api-token-permission', 'morphMany'>;
   };
 }
 
@@ -314,6 +319,7 @@ export interface AdminTransferToken extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::transfer-token', 'morphMany'>;
   };
 }
 
@@ -359,6 +365,7 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'admin::transfer-token-permission', 'morphMany'>;
   };
 }
 
@@ -390,6 +397,7 @@ export interface ApiRestaurantRestaurant extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'api::restaurant.restaurant', 'morphMany'>;
   };
 }
 
@@ -451,6 +459,7 @@ export interface PluginUploadFile extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'plugin::upload.file', 'morphMany'>;
   };
 }
 
@@ -510,6 +519,44 @@ export interface PluginUploadFolder extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'plugin::upload.folder', 'morphMany'>;
+  };
+}
+
+export interface PluginTodoTask extends Schema.CollectionType {
+  collectionName: 'tasks';
+  info: {
+    singularName: 'task';
+    pluralName: 'tasks';
+    displayName: 'Task';
+  };
+  options: {
+    draftAndPublish: false;
+    comment: '';
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 40;
+      }>;
+    isDone: Attribute.Boolean & Attribute.DefaultTo<false>;
+    related: Attribute.Relation<'plugin::todo.task', 'morphToOne'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::todo.task',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::todo.task',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    tasks: Attribute.Relation<'plugin::todo.task', 'morphMany'>;
   };
 }
 
@@ -552,6 +599,10 @@ export interface PluginUsersPermissionsPermission
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<
+      'plugin::users-permissions.permission',
+      'morphMany'
+    >;
   };
 }
 
@@ -604,6 +655,7 @@ export interface PluginUsersPermissionsRole extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'plugin::users-permissions.role', 'morphMany'>;
   };
 }
 
@@ -661,6 +713,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'plugin::users-permissions.user', 'morphMany'>;
   };
 }
 
@@ -705,6 +758,7 @@ export interface PluginI18NLocale extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    tasks: Attribute.Relation<'plugin::i18n.locale', 'morphMany'>;
   };
 }
 
@@ -721,6 +775,7 @@ declare module '@strapi/types' {
       'api::restaurant.restaurant': ApiRestaurantRestaurant;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
+      'plugin::todo.task': PluginTodoTask;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
